@@ -1,0 +1,4 @@
+- Funcionarios
+usuario 111.111 usr 123
+- Gerentes
+gerente 111.333 ger 321
