@@ -60,12 +60,21 @@ public class Main {
 			}
 			try {
 				opcao = scanner.nextInt();
+				if((opcao >= 7 && !garagem.isGerente(usr, psswd)) ||(opcao >= 11 && garagem.isGerente(usr, psswd))) {
+					throw new Exception();
+				}
 			}
 			catch(InputMismatchException e) {
 				System.out.println("Erro: Opção inválida. Insira um número inteiro.");
 				System.out.println();
 				
 			}
+			catch(Exception e) {
+				System.out.println("Erro: Opção inválida. Insira um número dentro do limite opções.");
+				System.out.println();
+				
+			}
+			
 			
 			scanner.nextLine();
 			switch (opcao) {
@@ -137,9 +146,13 @@ public class Main {
 			else if(garagem.isGerente(usr, psswd) && opcao == 9) {
 				ui.opcao9();	
 				entrada = scanner.nextLine();
-				garagem.remPess(entrada);
+				garagem.remPess(entrada, usr, psswd);
 			}
-			
+			else if(garagem.isGerente(usr, psswd) && opcao == 10) {
+				ui.opcao10();	
+				entrada = scanner.nextLine();
+				ui		.mostrarPess(entrada);
+			}
 		}
 
 	}

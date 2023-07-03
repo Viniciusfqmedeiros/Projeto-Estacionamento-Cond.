@@ -12,7 +12,7 @@ public class UI {
 	public void mostrarOpcoes() {
 		System.out.println("Escolha:");
 		System.out.println("[1] Cadastrar/Conferir apartamento");
-		System.out.println("[2] Remove apartamento");
+		System.out.println("[2] Remover apartamento");
 		System.out.println("[3] Cadastrar novo veiculo");
 		System.out.println("[4] Remover veiculo");
 		System.out.println("[5] Placa que saiu/voltou");
@@ -99,7 +99,10 @@ public class UI {
 		System.out.println("Deseja remover funcionário ou gerente? Digite o CPF");
 	}
 	
-
+	public void opcao10(){
+		System.out.println("Digite o CPF do funcionário/gerente.");
+		
+	}
 
 
 	public void ShowInfo(String info){
@@ -162,6 +165,7 @@ public class UI {
 		System.out.println("[7] Mudar número máximo de automóveis de determinado apt");
 		System.out.println("[8] Adicionar funcionário/gerente");
 		System.out.println("[9] Remover funcionário/gerente");
+		System.out.println("[10] Consultar funcionário/gerente");
 		
 		
 	}
@@ -183,6 +187,44 @@ public class UI {
 		info = scanner.nextLine();
 		usr.add(info);
 		return usr;
+		
+	}
+	
+	public void mostrarPess(String cpf) {
+		boolean find = false;
+		for(Pessoa pessoa : Garagem.getPessoas()) {
+			if(pessoa.getCpf().equals(cpf)) {
+				find = !find;
+				System.out.println("");
+				System.out.println("Nome: "+pessoa.getNome());
+				System.out.println("CPF: "+pessoa.getCpf());
+				if(pessoa.getTipo() == 0) {
+					Funcionario func = (Funcionario) pessoa;
+					System.out.println("Tipo: Funcionário");
+					System.out.println("Identificador: "+func.getId());
+					System.out.println("Senha: " + func.getSenha());
+				}
+				else if(pessoa.getTipo() == 1) {
+					Gerente func = (Gerente) pessoa;
+					System.out.println("Tipo: Gerente");
+					System.out.println("Identificador: "+func.getId());
+					System.out.println("Senha: " + func.getSenha());
+					
+				}
+				System.out.println("");
+			}
+			
+		}
+		try {
+		if(!find) {
+			throw new Exception();
+		}
+		}
+		catch(Exception e) {
+			System.out.println("");
+			System.out.println("Usuário com cpf informado não encontrado.");
+			System.out.println("");
+		}
 		
 	}
 

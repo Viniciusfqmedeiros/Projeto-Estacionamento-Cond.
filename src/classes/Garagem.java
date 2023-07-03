@@ -96,7 +96,7 @@ public  class Garagem implements OperacoesAutomoveis, OperacoesApartamentos, Ope
 					 continue;
 					 
 				 }
-				if(flag) {
+				if(flag && conferirCpf(linha[2])) {
 					//System.out.println(linha[0]);
 					pessoas.add(new Funcionario(linha[0], linha[1], linha[2], linha[3]));
 					 
@@ -120,7 +120,7 @@ public  class Garagem implements OperacoesAutomoveis, OperacoesApartamentos, Ope
 					 
 				 }
 				
-				if(flag) {
+				if(flag && conferirCpf(linha[2]) ) {
 				
 					
 					pessoas.add(new Gerente(linha[0], linha[1], linha[2], linha[3]));
@@ -138,11 +138,11 @@ public  class Garagem implements OperacoesAutomoveis, OperacoesApartamentos, Ope
 			
 		}
 		
-		//	Funcionario funcionario = new Funcionario("vinicius","123.456", "usr", "123" );	
-		//	Funcionario gerente = new Funcionario("gerente","789.101112", "ger", "321" );	
-		//funcionarios.add(funcionario);
-		//funcionarios.add(gerente);
-		//adiciona funcionario provisorio
+			
+	    Gerente admin = new Gerente("sysadm","xxx.xxx-xx", "sysadm", "999" );	
+	    if(conferirCpf("xxx.xxx-xx")) {
+	    	pessoas.add(admin);
+	    }
 	
 	}
 	  
@@ -202,7 +202,6 @@ public  class Garagem implements OperacoesAutomoveis, OperacoesApartamentos, Ope
 			  		
 			  	}
 			  	else if(linha[1].equals("carro")){
-			  		   
 			  			apartamento.addCarro(linha[0], linha[2].equals("dentro"));
 			  			
 			  	}
@@ -421,31 +420,91 @@ public  class Garagem implements OperacoesAutomoveis, OperacoesApartamentos, Ope
 	
 	public void addPess(String tip){
 	  	ArrayList <String> usr= ui.lerUsr();
-	  	
-	  	if(tip.equals("F")) {
-	  		pessoas.add(new Funcionario(usr.get(0), usr.get(1), usr.get(2), usr.get(3)));
+	  	try {
 	  		
+	  		if(conferirCpf(usr.get(1))) {
+	  		
+	  			if(tip.equals("F")) {
+	  		
+	  			pessoas.add(new Funcionario(usr.get(0), usr.get(1), usr.get(2), usr.get(3)));
+	  		
+	  		}
+	  	
+	  		if(tip.equals("G")) {
+	  			pessoas.add(new Gerente(usr.get(0), usr.get(1), usr.get(2), usr.get(3)));	  			
+	  		}
+	  	
+	  	
+	  	}
+	  	else {
+	  		throw new Exception();
 	  	}
 	  	
-	  	if(tip.equals("G")) {
-	  		pessoas.add(new Gerente(usr.get(0), usr.get(1), usr.get(2), usr.get(3)));
+	  	}
+	  	catch(Exception e) {
+	  		
+	  		System.out.println("CPF já cadastrado.");
+	  		System.out.println("");
 	  		
 	  	}
-	  	
-	  
-	  
 	  
 	  }
 	
+	public boolean conferirCpf(String cpf) {
+		for(Pessoa pess: pessoas) {
+			if(pess.getCpf().equals(cpf)) {
+				
+				return false;
+			}
+			
+		}
+		
+		
+		return true;
+	}
 	
-	public void remPess(String cpf){
+	
+	public void remPess(String cpf, String usr, String psswd){
 	  	int i  = 0;
 	  	for(Pessoa pess : pessoas) {
+	  	try {
+	  		if(pess.getCpf().equals(cpf) && pess instanceof Funcionario){
+		  		Funcionario ger = (Funcionario) pess;
+	  			if(!ger.getId().equals(usr) && !ger.getSenha().equals(psswd)) {
+	  				System.out.println("Teste1");
+	  				pessoas.remove(i);
+	  			}
+	  			else {
+	  				throw new Exception();
+	  			}
 	  		
-	  		if(pess.getCpf().equals(cpf)) {
-	  			pessoas.remove(i);
+	  			
+	  		
 	  		}
+	  		
+	  		
+			if(pess.getCpf().equals(cpf) && pess instanceof Gerente){
+		  		Gerente ger = (Gerente) pess;
+	  			if(!ger.getId().equals(usr) && !ger.getSenha().equals(psswd)) {
+	  				System.out.println("Teste1");
+	  				pessoas.remove(i);
+	  			}
+	  			else {
+	  				throw new Exception();
+	  			}
+	  		
+	  			
+	  		
+	  		}
+	  			
+	  		
+	  	}
+	  	catch(Exception e) {
+	  		System.out.println("Não pode excluir a própria conta.");
+	  		
+	  	}
 	  		i++;
+	  		
 	  		
 	  	}
 	  	
@@ -453,5 +512,7 @@ public  class Garagem implements OperacoesAutomoveis, OperacoesApartamentos, Ope
 	  
 	  
 	  }
+	
+	
 	 
 }
