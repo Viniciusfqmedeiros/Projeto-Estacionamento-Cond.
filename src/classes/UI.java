@@ -11,6 +11,7 @@ public class UI {
 	
 	public void mostrarOpcoes() {
 		System.out.println("Escolha:");
+		System.out.println("[0] Retornar a alguma ação anterior");
 		System.out.println("[1] Cadastrar/Conferir apartamento");
 		System.out.println("[2] Remover apartamento");
 		System.out.println("[3] Cadastrar novo veiculo");
@@ -51,7 +52,13 @@ public class UI {
 		System.out.print("Senha: ");
 		System.out.println();
 	}	
-
+	
+	public void opcao0(){
+		System.out.println("Entrando no modo UNDO");
+		
+	}
+	
+	
 	public void opcao1(){
 		System.out.println("Cadastrar/Conferir Apartamento");
 		System.out.println("Qual o numero?");

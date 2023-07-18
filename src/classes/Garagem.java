@@ -65,6 +65,45 @@ public  class Garagem implements OperacoesAutomoveis, OperacoesApartamentos, Ope
   
   
 	  }
+//versão para GUI: 
+ void visitante(String aptNo, String placa, String tipo){
+	  int dentroCar = 0;
+	  int dentroMot = 0;
+	  boolean dentro;
+	  String nome;
+	  ArrayList<String> info;
+	  
+	  int index = EncontrarApt(aptNo);
+	  for(Automovel automovel : apartamentos.get(index).getAutomoveis()){
+	  	  
+		  if(automovel.isDentro() && automovel.getTipo() == 1){
+					dentroCar++;
+		   }
+		   
+		   if(automovel.isDentro() && automovel.getTipo() == 2){		
+		  		dentroMot++;
+		  }
+		  
+	  }//!< Conta a quantidade de motos e carros estacionados
+	  
+	  
+	  if(dentroCar < apartamentos.get(index).getVagaTotalCarro()  
+		&& tipo.equals("C")){
+	   		getApartamentos().get(index).addCarro( "#" + placa, true);
+	  
+	  }//!< estaciona um carro no apartamento se houver vaga disponível
+		  
+	  
+	  if(dentroMot < apartamentos.get(index).getVagaTotalMoto()  
+		&& tipo.equals("M")){
+		    getApartamentos().get(index).addMoto("#" + placa, true);
+	  
+	  }//!< estaciona um carro no apartamento se houver vaga disponível
+	  
+	  
+		  }
+ 
+ 
 
 	public void lerLogins(){
 		
@@ -148,7 +187,7 @@ public  class Garagem implements OperacoesAutomoveis, OperacoesApartamentos, Ope
 	  
 	 
 	
-	public void lerDados() {
+public void lerDados() {
 		
 		
 		
@@ -203,7 +242,7 @@ public  class Garagem implements OperacoesAutomoveis, OperacoesApartamentos, Ope
 			  	}
 			  	else if(linha[1].equals("carro")){
 			  			apartamento.addCarro(linha[0], linha[2].equals("dentro"));
-			  			
+			  					
 			  	}
 			  
 			  }
@@ -279,6 +318,23 @@ public  class Garagem implements OperacoesAutomoveis, OperacoesApartamentos, Ope
 		return "INEXISTENTE";
 
 	}
+	
+	
+	public ArrayList <String> InfoApt(String numero, boolean b) {
+		ArrayList <String> info = new ArrayList<>();
+		int index = EncontrarApt(numero);
+		if (index != -1) {
+			info.add(String.valueOf(getApartamentos().get(index).getVagaAtualMoto()));
+			info.add(String.valueOf(getApartamentos().get(index).getVagaAtualCarro()));
+			info.add(String.valueOf(getApartamentos().get(index).getVagaAtualEstacionadaMoto()));
+			info.add( String.valueOf(getApartamentos().get(index).getVagaAtualEstacionadaCarro()));
+			return info;
+		}
+		info.add("INEXISTENTE");
+
+		return info;
+
+	}
 
 	public void NovoApt(String numero) {
 		if (ui.Wish("adicionar")) {
@@ -286,7 +342,14 @@ public  class Garagem implements OperacoesAutomoveis, OperacoesApartamentos, Ope
 			getApartamentos().add(apt);
 		}
 	}
-
+	//versão para GUI:
+	public void NovoApt(String numero, int n) {
+		
+		Apartamento apt = new Apartamento(numero);
+		getApartamentos().add(apt);
+		
+	}
+	
 	public void NovoAutomovel(String aptNo) {
 		ArrayList <String> info;
 		boolean dentro;
@@ -304,6 +367,20 @@ public  class Garagem implements OperacoesAutomoveis, OperacoesApartamentos, Ope
 		}
 
 	}
+	//versão para GUI:	
+	public void NovoAutomovel(String aptNo, String placa, String tipo, boolean dentro  ) {
+		int index = EncontrarApt(aptNo);
+		
+		if ( index != -1 && tipo.equals("C") ) {
+			
+			getApartamentos().get(index).addCarro(placa, dentro);
+		}
+		if ( index != -1 && tipo.equals("M")) {
+			getApartamentos().get(index).addMoto(placa, dentro);
+		}
+
+	}
+	
 
 	public int  EncontrarApt(String aptno) {
 
@@ -449,6 +526,29 @@ public  class Garagem implements OperacoesAutomoveis, OperacoesApartamentos, Ope
 	  	}
 	  
 	  }
+	
+	//versão para GUI:
+	public void addPess(String tip, String nome, String cpf, String id, String senha){
+	  
+	  		
+	  		if(conferirCpf(cpf)) {
+	  		
+	  			if(tip.equals("F")) {
+	  		
+	  			pessoas.add(new Funcionario(nome, cpf, id, senha));
+	  		
+	  		}
+	  	
+	  		if(tip.equals("G")) {
+	  			pessoas.add(new Gerente(nome, cpf, id, senha));	  			
+	  		}
+	  	
+	  	
+	  	}
+	  
+	  
+	  }
+	
 	
 	public boolean conferirCpf(String cpf) {
 		for(Pessoa pess: pessoas) {

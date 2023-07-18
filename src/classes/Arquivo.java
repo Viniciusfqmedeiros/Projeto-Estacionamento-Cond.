@@ -67,7 +67,7 @@ public class Arquivo {
 		   		writer.newLine();
 		   		for(Automovel automovel : apartamento.getAutomoveis()) {
 		   			writer.write(automovel.getPlaca());
-		   			writer.write(" ");
+   		   			writer.write(" ");
 		   			if(automovel.getTipo() == 	1) {	writer.write("carro");	}
 		   			else { 	writer.write("moto");	}
 		   			writer.write(" ");

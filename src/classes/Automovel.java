@@ -1,7 +1,7 @@
 package classes;
 public abstract class Automovel {
 	
-    private String placa;
+    protected String placa;
     private boolean dentro;
     private int tipo;//0 nenhum, 1 carro, 2 moto
     
@@ -14,9 +14,8 @@ public abstract class Automovel {
         return placa;
     }
 
-    public void setPlaca(String placa) {
-        this.placa = placa;
-    }
+    public abstract void setPlaca(String placa);
+    
 
     public int getTipo() {
 		return tipo;
@@ -34,6 +33,6 @@ public abstract class Automovel {
 		this.dentro = dentro;
 	}
 	
-
+	
 
 }
