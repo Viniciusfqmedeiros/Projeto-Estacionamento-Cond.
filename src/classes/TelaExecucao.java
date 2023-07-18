@@ -340,8 +340,8 @@ public class TelaExecucao  extends JFrame implements ActionListener{
 		setSize(screenSize.width,screenSize.height);
 		int h = 20;
 		int w = 300;
-		tentry.setBounds(0, screenSize.height-h-10, screenSize.width-50, h+10);
-		send.setBounds(screenSize.width-50, screenSize.height-h-10, 50, h+10);
+		tentry.setBounds(0, 600, screenSize.width-50, h+10);
+		send.setBounds(screenSize.width-50, 600, 50, h+10);
 		
 		this.add(tentry);
 		this.add(send);
